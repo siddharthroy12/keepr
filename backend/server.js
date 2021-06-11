@@ -3,8 +3,9 @@ const express = require('express')
 const morgan = require('morgan')
 const connectDB = require('./utils/connectDB')
 const { notFound, errorHandler } = require('./middlewares/errorMiddlewares')
-
-var fs = require('fs')
+const labelRoutes = require('./routes/labelRoutes')
+const noteRoutes = require('./routes/noteRoutes')
+const userRoutes = require('./routes/userRoutes')
 
 // Load environment variables from .env
 require('dotenv').config()
@@ -20,6 +21,9 @@ if (process.env.NODE_ENV === 'development') {
 }
 
 app.use(express.json())
+app.use('/api/label', labelRoutes)
+app.use('/api/notes', noteRoutes)
+app.use('/api/user', userRoutes)
 
 // Serve build in production mode
 if (process.env.NODE_ENV === 'production') {

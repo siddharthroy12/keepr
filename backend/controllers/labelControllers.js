@@ -87,3 +87,9 @@ const deleteLabel = asyncHandler(async (req, res) => {
 	res.status(200)
 	res.json({message: 'Label Removed'})
 })
+
+module.exports = {
+	createLabel,
+	renameLabel,
+	deleteLabel
+}
