@@ -1,7 +1,6 @@
 const asyncHandler = require('express-async-handler')
 const Note = require('../models/Note')
 const User = require('../models/User')
-const Label = require('../models/Label')
 
 // @desc Create a note
 // @route POST /api/notes
@@ -16,7 +15,7 @@ const createNote = asyncHandler(async (req, res) => {
 
 	try {
 		const newNote = await Note.create({
-			owner: req._user._id,
+			owner: req.user._id,
 			title: title || '',
 			body: body || '',
 			labels: labels || [],
@@ -27,12 +26,14 @@ const createNote = asyncHandler(async (req, res) => {
     	user.notes.push(newNote._id)
     	await user.save()
 
+		res.status(201)
+		res.json(newNote)
+
 	} catch(error) {
+
 		res.status(500)
 		throw new Error('Failed to create Note')
 	}
-
-	res.json(newPost)
 })
 
 // @desc Update a note
@@ -48,13 +49,27 @@ const updateNote = asyncHandler(async (req, res) => {
 		throw new Error('Note not found')
 	}
 
-	note.title = title
-	note.body = body
-	note.image = image
-	note.labels = labels
-	note.color = color
+	if (note.owner !== req.user._id) {
+		res.status(403)
+		throw new Error("You don't have access to this note")
+	}
 
-	res.json(await note.save())
+	try {
+		note.title = title
+		note.body = body
+		note.image = image
+		note.labels = labels
+		note.color = color
+		await note.save()
+
+		res.status(200)
+		res.json(note)
+
+	} catch (error) {
+
+		res.status(500)
+		throw new Error('Failed to update note')
+	}
 })
 
 // @desc Trash a note
@@ -68,15 +83,29 @@ const trashNote = asyncHandler(async (req, res) => {
 		throw new Error('Note not found')
 	}
 
-	note.trashed = true
+	if (note.owner !== req.user._id) {
+		res.status(403)
+		throw new Error("You don't have access to this note")
+	}
 
-	res.json(await note.save())
+	try {
+		note.trashed = true
+		await note.save()
+
+		res.status(200)
+		res.json(note)
+	} catch (error) {
+		res.status(500)
+		throw new Error('Failed to trash note')
+	}
+
+
 })
 
 // @desc Restore a note
 // @route GET /api/notes/:id/restore
 // @access Private
-const trashNote = asyncHandler(async (req, res) => {
+const restoreNote = asyncHandler(async (req, res) => {
 	let note = Note.findById(req.params.id)
 
 	if (!note) {
@@ -84,29 +113,53 @@ const trashNote = asyncHandler(async (req, res) => {
 		throw new Error('Note not found')
 	}
 
-	note.trashed = false
+	if (note.owner !== req.user._id) {
+		res.status(403)
+		throw new Error("You don't have access to this note")
+	}
 
-	res.json(await note.save())
+	try {
+		note.trashed = false
+		await note.save()
+
+		res.status(200)
+		res.json(note)
+	} catch (error) {
+		res.status(500)
+		throw new Error('Failed to restore note')
+	}
 })
 
 // @desc Delete a note
 // @route DELETE /api/notes/:id
 // @access Private
-const trashNote = asyncHandler(async (req, res) => {
+const deleteNote = asyncHandler(async (req, res) => {
 	let note = Note.findById(req.params.id)
 
 	if (!note) {
 		res.status(404)
 		throw new Error('Note not found')
 	}
+	
+	if (note.owner !== req.user._id) {
+		res.status(403)
+		throw new Error("You don't have access to this note")
+	}
 
 	const user = await User.findById(note.owner)
+
     if (user) {
         user.notes = user.notes.filter(userNote => userNote.toString() !== note._id.toString())
         await user.save()
     }
     
-	await note.remove()
+	try {
+		await note.remove()
+	} catch(error) {
+		res.status(500)
+		throw new Error('Failed to delete note')
+	}
+	
     
 	res.json({message: 'Note removed'})
 })
@@ -114,5 +167,7 @@ const trashNote = asyncHandler(async (req, res) => {
 module.exports = {
 	createNote,
 	updateNote,
-	trashNote
+	trashNote,
+	restoreNote,
+	deleteNote
 }

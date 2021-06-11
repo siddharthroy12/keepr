@@ -20,24 +20,24 @@ const registerUser = asyncHandler(async (req, res) => {
         throw new Error('User already exist')
     }
 
-	const user = await User.create({
-        username,
-        name,
-		password
-    })
+    try {
+        const user = await User.create({
+            username,
+            name,
+            password
+        })
 
-	if (user) {
         res.status(201).json({
             _id: user._id,
             name: user.name,
 			username: user.username,
             token: generateToken(user._id),
         })
-    } else {
-        res.status(400)
+
+    } catch(error) {
+        res.status(500)
         throw new Error('Error in creating user')
     }
-
 })
 
 // @decs Login User
@@ -46,8 +46,18 @@ const registerUser = asyncHandler(async (req, res) => {
 const loginUser = asyncHandler(async (req, res) => {
     const { username, password } = req.body
     const user = await User.findOne({ username })
+
+    if (!user) {
+        res.status(400)
+        throw new Error('Username not found')
+    }
+
+    if (user.disabled) {
+        res.status(401)
+        throw new Error('Account with that username is disabled')
+    }
     
-    if (user && (await user.matchPassword(password))) {
+    if ((await user.matchPassword(password))) {
         res.json({
             _id: user._id,
             name: user.name,
@@ -56,8 +66,8 @@ const loginUser = asyncHandler(async (req, res) => {
             token: generateToken(user._id)
         })
     } else {
-        res.status(401)
-        throw new Error('Invalid username or password')
+        res.status(400)
+        throw new Error('Invalid password')
     }
 })
 
@@ -92,7 +102,8 @@ const disableUser = asyncHandler(async (req, res) => {
         res.status(404)
         throw new Error('User not found')
     } else {
-        await user.delete()
+        user.disabled = true
+        await user.save()
         res.json({message: 'User Disabled'})
     }
 })
