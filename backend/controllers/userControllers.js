@@ -1,6 +1,6 @@
 const asyncHandler = require('express-async-handler')
 const User = require('../models/User')
-const generateToken = require('../utils/gernerateToken')
+const generateToken = require('../utils/generateToken')
 
 // @desc Register user & send token back
 // @route POST /api/user/register
@@ -108,6 +108,22 @@ const disableUser = asyncHandler(async (req, res) => {
     }
 })
 
+// @desc Enable User
+// @route PUT /api/user/:id
+// @access Private/Admin
+const enableUser = asyncHandler(async (req, res) => {
+    const user = await User.findById(req.params.id)
+    
+    if (!user) {
+        res.status(404)
+        throw new Error('User not found')
+    } else {
+        user.disabled = false
+        await user.save()
+        res.json({message: 'User Enabled'})
+    }
+})
+
 // @desc Disable all Users
 // @route DELETE /api/user
 // @access Private/Admin
@@ -122,5 +138,6 @@ module.exports = {
     getUsers,
     getUser,
     disableUser,
+    enableUser,
     disableAllUsers
 }

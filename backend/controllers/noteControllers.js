@@ -2,6 +2,26 @@ const asyncHandler = require('express-async-handler')
 const Note = require('../models/Note')
 const User = require('../models/User')
 
+// @desc Get a note
+// @route GET /api/notes/:id
+// @access Private
+const getNote = asyncHandler(async (req, res) => {
+	const note = await Note.findById(req.params.id)
+
+	if (!note) {
+		res.status(404)
+		throw new Error('Note not found')
+	}
+
+	if (note.owner.toString() !== req.user._id.toString()) {
+		res.status(403)
+		throw new Error("You don't have access to this note")
+	}
+
+	res.status(200)
+	res.json(note)
+})
+
 // @desc Create a note
 // @route POST /api/notes
 // @access Private
@@ -42,48 +62,66 @@ const createNote = asyncHandler(async (req, res) => {
 const updateNote = asyncHandler(async (req, res) => {
 	const { title, body, image, labels, color } = req.body
 
-	let note = Note.findById(req.params.id)
+	if (title !== undefined && body !== undefined) {
+		if (title.trim() === '' && body.trim() === '') {
+			res.status(400)
+			throw new Error('Either title or body can be empty, not both')
+		}
+	}
+
+	console.log(body)
+
+	let note = await Note.findById(req.params.id)
 
 	if (!note) {
 		res.status(404)
 		throw new Error('Note not found')
 	}
 
-	if (note.owner !== req.user._id) {
+	if (note.owner.toString() !== req.user._id.toString()) {
 		res.status(403)
 		throw new Error("You don't have access to this note")
 	}
 
+	testTitle = title === undefined ? note.title : title
+	testBody = body === undefined ? note.body : body
+
+	if (testBody === "" && testTitle === "") {
+		res.status(400)
+		throw new Error('Either title or body can be empty, not both')
+	}
+
 	try {
-		note.title = title
-		note.body = body
-		note.image = image
-		note.labels = labels
-		note.color = color
+		note.title = testTitle
+		note.body = testBody
+		note.image = image === undefined ? note.image : image
+		note.labels = labels === undefined ? note.labels : labels
+		note.color = color === undefined ? note.color : color
 		await note.save()
 
 		res.status(200)
 		res.json(note)
 
 	} catch (error) {
-
 		res.status(500)
 		throw new Error('Failed to update note')
 	}
 })
 
+// TODO: Test Reset of note and label
+
 // @desc Trash a note
 // @route GET /api/notes/:id/trash
 // @access Private
 const trashNote = asyncHandler(async (req, res) => {
-	let note = Note.findById(req.params.id)
+	let note = await Note.findById(req.params.id)
 
 	if (!note) {
 		res.status(404)
 		throw new Error('Note not found')
 	}
 
-	if (note.owner !== req.user._id) {
+	if (note.owner.toString() !== req.user._id.toString()) {
 		res.status(403)
 		throw new Error("You don't have access to this note")
 	}
@@ -106,14 +144,14 @@ const trashNote = asyncHandler(async (req, res) => {
 // @route GET /api/notes/:id/restore
 // @access Private
 const restoreNote = asyncHandler(async (req, res) => {
-	let note = Note.findById(req.params.id)
+	let note = await Note.findById(req.params.id)
 
 	if (!note) {
 		res.status(404)
 		throw new Error('Note not found')
 	}
 
-	if (note.owner !== req.user._id) {
+	if (note.owner.toString() !== req.user._id.toString()) {
 		res.status(403)
 		throw new Error("You don't have access to this note")
 	}
@@ -134,14 +172,14 @@ const restoreNote = asyncHandler(async (req, res) => {
 // @route DELETE /api/notes/:id
 // @access Private
 const deleteNote = asyncHandler(async (req, res) => {
-	let note = Note.findById(req.params.id)
+	let note = await Note.findById(req.params.id)
 
 	if (!note) {
 		res.status(404)
 		throw new Error('Note not found')
 	}
 	
-	if (note.owner !== req.user._id) {
+	if (note.owner.toString() !== req.user._id.toString()) {
 		res.status(403)
 		throw new Error("You don't have access to this note")
 	}
@@ -165,6 +203,7 @@ const deleteNote = asyncHandler(async (req, res) => {
 })
 
 module.exports = {
+	getNote,
 	createNote,
 	updateNote,
 	trashNote,

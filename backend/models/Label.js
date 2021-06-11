@@ -12,4 +12,4 @@ const labelSchema = mongoose.Schema({
 	},
 })
 
-module.exports = Label = mongoose.model('Label', LabelSchema)
+module.exports = Label = mongoose.model('Label', labelSchema)
