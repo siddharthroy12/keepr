@@ -1,5 +1,6 @@
 const express = require('express')
 const {
+	getNotesUser,
 	getNote,
 	createNote,
 	updateNote,
@@ -12,6 +13,8 @@ const router = express.Router()
 
 router.route('/')
 	.post(protect, createNote)
+router.route('/user/:id')
+	.get(protect, getNotesUser)
 router.route('/:id')
 	.get(protect, getNote)
 	.put(protect, updateNote)

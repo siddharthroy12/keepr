@@ -2,6 +2,21 @@ const asyncHandler = require('express-async-handler')
 const Note = require('../models/Note')
 const User = require('../models/User')
 
+// @desc Get notes of a user
+// @route GET /api/notes/user/:id
+// @access Private
+const getNotesUser = asyncHandler(async (req, res) => {
+	if (req.user._id.toString() !== req.params.id ) {
+		res.status(403)
+		throw new Error("You don't have access to these notes")
+	}
+
+	const notes = await Note.find({ owner: req.params.id })
+
+	res.status(200)
+	res.json(notes)
+})
+
 // @desc Get a note
 // @route GET /api/notes/:id
 // @access Private
@@ -108,8 +123,6 @@ const updateNote = asyncHandler(async (req, res) => {
 	}
 })
 
-// TODO: Test Reset of note and label
-
 // @desc Trash a note
 // @route GET /api/notes/:id/trash
 // @access Private
@@ -126,7 +139,16 @@ const trashNote = asyncHandler(async (req, res) => {
 		throw new Error("You don't have access to this note")
 	}
 
+	if (note.trashed) {
+		res.status(400)
+		throw new Error("This note is already trashed")
+	}
+
 	try {
+		const owner = await User.findById(note.owner)
+		owner.notes = owner.notes.filter(ownerNote => ownerNote.toString() !== note._id.toString())
+		owner.trash.push(note._id)
+		await owner.save()
 		note.trashed = true
 		await note.save()
 
@@ -156,10 +178,19 @@ const restoreNote = asyncHandler(async (req, res) => {
 		throw new Error("You don't have access to this note")
 	}
 
+	if (!note.trashed) {
+		res.status(400)
+		throw new Error("Note is not trashed")
+	}
+
 	try {
+		const owner = await User.findById(note.owner)
+		owner.notes.push(note._id)
+		owner.trash = owner.trash.filter(ownerNote => ownerNote.toString() !== note._id.toString())
+		owner.save()
 		note.trashed = false
 		await note.save()
-
+		
 		res.status(200)
 		res.json(note)
 	} catch (error) {
@@ -203,6 +234,7 @@ const deleteNote = asyncHandler(async (req, res) => {
 })
 
 module.exports = {
+	getNotesUser,
 	getNote,
 	createNote,
 	updateNote,
