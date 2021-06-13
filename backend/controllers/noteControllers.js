@@ -92,7 +92,13 @@ const updateNote = asyncHandler(async (req, res) => {
 		}
 	}
 
-	console.log(body)
+	if (title) {
+		title = title.trim()
+	}
+
+	if (body) {
+		body = body.trim()
+	}
 
 	let note = await Note.findById(req.params.id)
 
