@@ -48,6 +48,14 @@ const createNote = asyncHandler(async (req, res) => {
         throw new Error('Either title or body is required')
 	}
 
+	if (title) {
+		title = title.trim()
+	}
+
+	if (body) {
+		body = body.trim()
+	}
+
 	try {
 		const newNote = await Note.create({
 			owner: req.user._id,

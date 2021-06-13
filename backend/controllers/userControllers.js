@@ -22,8 +22,8 @@ const registerUser = asyncHandler(async (req, res) => {
 
     try {
         const user = await User.create({
-            username,
-            name,
+            username: username.trim(),
+            name: name.trim(),
             password
         })
 
