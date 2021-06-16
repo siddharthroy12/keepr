@@ -4,7 +4,8 @@ import {
 	AUTHENTICATION_SUCCESS,
 	LOGIN_FAIL,
 	LOGIN_SUCCESS,
-	LOGOUT
+	LOGOUT,
+	AUTHENTICATION_FAIL
 } from '../Constants/loginConstants'
 
 const loginReducer = (state = { }, action) => {
@@ -15,6 +16,9 @@ const loginReducer = (state = { }, action) => {
 			return { loading: true }
 		case AUTHENTICATION_SUCCESS:
 			return { loggedIn: true }
+		case AUTHENTICATION_FAIL:
+			localStorage.removeItem('loginInfo')
+			return { loggedIn: false }
 		case LOGIN_SUCCESS:
 			localStorage.setItem('loginInfo', JSON.stringify(action.payload))
 			return { loggedIn: true, info: action.payload }

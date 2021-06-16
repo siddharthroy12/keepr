@@ -3,7 +3,6 @@ import { useSelector } from 'react-redux'
 
 const PrivateRoute = ({component: Component, ...rest}) => {
 	const login = useSelector(state => state.login)
-	console.log({ login })
     return (
         <Route {...rest} render={props => {
 			return login.loggedIn ?

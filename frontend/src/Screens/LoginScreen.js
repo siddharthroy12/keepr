@@ -23,7 +23,7 @@ export default function LoginScreen() {
 		if (loginState.loggedIn) {
 			history.push('/')
 		}
-	}, [loginState])
+	}, [loginState, history])
 
 	const onSumbit = (e) => {
 		e.preventDefault()
@@ -76,7 +76,8 @@ export default function LoginScreen() {
 						<input
 							type="password"
 							name="password"
-							placeholder="Password" 
+							placeholder="Password"
+							autoComplete="on"
 							required
 							value={password}
 							onChange={(e) => setPassword(e.target.value.trim())}

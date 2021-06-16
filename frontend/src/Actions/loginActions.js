@@ -3,6 +3,7 @@ import {
 	LOGIN_REQUEST,
     AUTHENTICATION_REQUEST,
     AUTHENTICATION_SUCCESS,
+    AUTHENTICATION_FAIL,
 	LOGIN_FAIL,
 	LOGIN_SUCCESS,
 	LOGOUT
@@ -51,7 +52,7 @@ export const authenticate = () => async (dispatch) => {
             }
         }
 
-		const { data } = await axios.get('http://localhost:5000/api/user/authenticate', config)
+		const { data } = await axios.get('/api/user/authenticate', config)
 
 		dispatch({
             type: AUTHENTICATION_SUCCESS,
@@ -59,7 +60,7 @@ export const authenticate = () => async (dispatch) => {
         })
 	} catch (error) {
 		dispatch({
-            type: LOGIN_FAIL,
+            type: AUTHENTICATION_FAIL,
             payload: error
         })
 	}

@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Redirect, useHistory } from 'react-router-dom';
-import { authenticate, logout } from '../Actions/loginActions'
+import { authenticate } from '../Actions/loginActions'
 import { useSelector, useDispatch } from 'react-redux'
 
 import './LoggerScreen.css'
@@ -31,7 +31,6 @@ export default function LoggerScreen() {
 			let error = login.error
 			if (error.response) {
 				// Request made and server responded (Failed to authenticate)
-				dispatch(logout())
 				history.push('/login')
 			  } else if (error.request) {
 				// The request was made but no response was received (Slow Internet)
