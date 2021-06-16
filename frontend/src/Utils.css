@@ -1,0 +1,54 @@
+.container {
+	max-width: 30rem;
+	margin: auto;
+}
+
+.btn-primary {
+    padding: 0.5rem 1rem;
+    background-color: #1b65ee;
+    font-size: 1rem;
+    font-weight: 400;
+    border-radius: 5px;
+    box-shadow: var(--shadow);
+    border: 2px solid #d8d8d8;
+    transition: .1s;
+	text-decoration: none;
+    color: white;
+}
+
+.btn-primary:hover {
+	background-color: #274abb;
+}
+
+.btn-secondary {
+	border: none;
+    color: #1b65ee;
+    font-size: 1rem;
+    border-radius: 5px;
+    font-weight:400;
+    padding: 0.5rem;
+	transition: .1s;
+	text-decoration: none;
+    border-radius: 5px;
+    border: 2px solid white;
+}
+
+.btn-secondary:hover {
+	background-color: #efefef;
+    border-radius: 5px;
+    border: 2px solid  #cecece;
+}
+
+.message {
+    border: 2px solid #cecece;
+    background-color: #efefef;
+    padding: 1rem 2rem;
+    border-radius: 5px;
+    box-shadow: var(--shadow);
+    border: 2px solid #d8d8d8;
+}
+
+.message.error {
+    background-color: #ec9393;
+    border: 2px solid #f37979;
+}

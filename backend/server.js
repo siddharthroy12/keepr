@@ -1,5 +1,6 @@
 const path = require('path')
 const express = require('express')
+const cors = require('cors')
 const morgan = require('morgan')
 const connectDB = require('./utils/connectDB')
 const { notFound, errorHandler } = require('./middlewares/errorMiddlewares')
@@ -13,12 +14,14 @@ require('dotenv').config()
 // Connect to database
 connectDB()
 
-const app =  express()
-
+const app = express()
+app.use(cors())
+console.log('cors')
 // Use logging in development mode
 if (process.env.NODE_ENV === 'development') {
     app.use(morgan('dev'))
 }
+
 
 app.use(express.json())
 app.use('/api/label', labelRoutes)

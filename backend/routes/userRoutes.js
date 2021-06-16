@@ -2,6 +2,7 @@ const express = require('express')
 const {
 	registerUser,
     loginUser,
+	authenticateUser,
     getUsers,
     getUser,
     disableUser,
@@ -16,6 +17,7 @@ router.route('/')
 	.delete(protect, admin, disableAllUsers)
 router.post('/register', registerUser)
 router.post('/login', loginUser)
+router.get('/authenticate', protect, authenticateUser)
 router.route('/:id')
 	.get(protect, admin, getUser)
 	.put(protect, admin, enableUser)

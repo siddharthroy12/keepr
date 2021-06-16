@@ -71,6 +71,14 @@ const loginUser = asyncHandler(async (req, res) => {
     }
 })
 
+// @decs Authenticate User
+// @route GET /api/user/authenticate
+// @access Public
+const authenticateUser = asyncHandler(async (req, res) => {
+    res.status(200)
+    res.json(req.user)
+})
+
 // @desc Get all users
 // @route GET /api/user
 // @access Private/Admin
@@ -135,6 +143,7 @@ const disableAllUsers = asyncHandler(async (req, res) => {
 module.exports = {
     registerUser,
     loginUser,
+    authenticateUser,
     getUsers,
     getUser,
     disableUser,
