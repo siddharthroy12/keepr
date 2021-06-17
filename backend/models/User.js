@@ -30,9 +30,9 @@ const userSchema = mongoose.Schema({
 		required: true
 	}],
 	isAdmin: {
-        type: Boolean,
-        default: false
-    },
+    type: Boolean,
+    default: false
+  },
 	disabled: {
 		type: Boolean,
 		default: false,

@@ -2,9 +2,11 @@ import { createStore, applyMiddleware, combineReducers } from 'redux'
 import thunk from 'redux-thunk'
 import { composeWithDevTools } from 'redux-devtools-extension'
 import loginReducer from './Reducers/loginReducer'
+import { notesReducer } from './Reducers/notesReducers'
 
 const reducers = combineReducers({
-	login: loginReducer
+	login: loginReducer,
+	notes: notesReducer
 })
 
 const initialState = {

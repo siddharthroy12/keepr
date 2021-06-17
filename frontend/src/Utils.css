@@ -52,3 +52,8 @@
     background-color: #ec9393;
     border: 2px solid #f37979;
 }
+
+.collection-grid {
+    display: flex;
+    flex-wrap: wrap;
+}

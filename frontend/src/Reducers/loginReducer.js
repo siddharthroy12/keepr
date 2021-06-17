@@ -15,7 +15,7 @@ const loginReducer = (state = { }, action) => {
 		case AUTHENTICATION_REQUEST:
 			return { loading: true }
 		case AUTHENTICATION_SUCCESS:
-			return { loggedIn: true }
+			return { loggedIn: true, info: action.payload }
 		case AUTHENTICATION_FAIL:
 			localStorage.removeItem('loginInfo')
 			return { loggedIn: false }

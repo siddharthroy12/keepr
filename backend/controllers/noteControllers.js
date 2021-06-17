@@ -37,6 +37,27 @@ const getNote = asyncHandler(async (req, res) => {
 	res.json(note)
 })
 
+// @desc Get all notes
+// @route GET /api/notes
+// @access Private
+const getNotes = asyncHandler(async (req, res) => {
+	const notes = await Note.find({trashed: false, owner: req.user._id})
+
+	res.status(200)
+	res.json(notes)
+})
+
+// @desc Get all trashed notes
+// @route GET /api/notes/trashed
+// @access Private
+const getTrashedNotes = asyncHandler(async (req, res) => {
+	const notes = await Note.find({trashed: true, owner: req.user._id})
+
+	res.status(200)
+	res.json(notes)
+})
+
+
 // @desc Create a note
 // @route POST /api/notes
 // @access Private
@@ -250,6 +271,8 @@ const deleteNote = asyncHandler(async (req, res) => {
 module.exports = {
 	getNotesUser,
 	getNote,
+	getNotes,
+	getTrashedNotes,
 	createNote,
 	updateNote,
 	trashNote,

@@ -16,7 +16,6 @@ connectDB()
 
 const app = express()
 app.use(cors())
-console.log('cors')
 // Use logging in development mode
 if (process.env.NODE_ENV === 'development') {
     app.use(morgan('dev'))

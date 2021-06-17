@@ -1,0 +1,30 @@
+.note {
+	border: 1px solid #d4d4d4;
+	margin: 1rem;
+	padding: 1rem;
+	border-radius: 5px;
+	width: 15rem;
+	padding-bottom: 3rem;
+	position: relative;
+}
+
+.note:hover {
+	box-shadow: var(--shadow);
+}
+
+.note-title {
+	font-weight: 500;
+}
+
+.note-overlay {
+	display: none;
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+}
+
+.note:hover .note-overlay {
+	display: block;
+}

@@ -1,0 +1,12 @@
+header {
+	padding: 1.5rem;
+	background-color: white;
+	border-bottom: 1px solid #e0e0e0;
+}
+
+.header-logo {
+	display: inline;
+	padding: 1rem;
+	background-color: #ffda24;
+	border-radius: 5px;
+}

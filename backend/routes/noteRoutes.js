@@ -2,6 +2,8 @@ const express = require('express')
 const {
 	getNotesUser,
 	getNote,
+	getNotes,
+	getTrashedNotes,
 	createNote,
 	updateNote,
 	trashNote,
@@ -13,6 +15,8 @@ const router = express.Router()
 
 router.route('/')
 	.post(protect, createNote)
+	.get(protect, getNotes)
+router.get('/trashed', protect, getTrashedNotes)
 router.route('/user/:id')
 	.get(protect, getNotesUser)
 router.route('/:id')

@@ -15,7 +15,13 @@ export default function LoginScreen() {
 
 	useEffect(() => {
 		if (loginState.error) {
-			setError(loginState.error.response.data.message)
+			if (loginState.error.response) {
+				setError(loginState.error.response.data.message)
+			} else if (loginState.error.request) {
+				setError('Slow Network, Failed to login')
+			} else {
+				setError('Unknown Error, Failed to login')
+			}
 		} else {
 			setError(null)
 		}
