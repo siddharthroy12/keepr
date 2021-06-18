@@ -62,7 +62,7 @@ const getTrashedNotes = asyncHandler(async (req, res) => {
 // @route POST /api/notes
 // @access Private
 const createNote = asyncHandler(async (req, res) => {
-	const { title, body, image, labels } = req.body
+	const { title, body, image, labels, color } = req.body
 
 	if (title.trim() === '' && body.trim() === '') {
 		res.status(400)
@@ -83,6 +83,7 @@ const createNote = asyncHandler(async (req, res) => {
 			title: title || '',
 			body: body || '',
 			labels: labels || [],
+			color: color || '',
 			image: image || ''
 		})
 

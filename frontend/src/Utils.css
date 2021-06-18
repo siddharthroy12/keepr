@@ -4,16 +4,16 @@
 }
 
 .btn-primary {
-    padding: 0.5rem 1rem;
-    background-color: #1b65ee;
-    font-size: 1rem;
-    font-weight: 400;
-    border-radius: 5px;
-    box-shadow: var(--shadow);
-    border: 2px solid #d8d8d8;
-    transition: .1s;
+  padding: 0.5rem 1rem;
+  background-color: #1b65ee;
+  font-size: 1rem;
+  font-weight: 400;
+  border-radius: 5px;
+  box-shadow: var(--shadow);
+  border: 2px solid #d8d8d8;
+  transition: .1s;
 	text-decoration: none;
-    color: white;
+  color: white;
 }
 
 .btn-primary:hover {
@@ -22,38 +22,76 @@
 
 .btn-secondary {
 	border: none;
-    color: #1b65ee;
-    font-size: 1rem;
-    border-radius: 5px;
-    font-weight:400;
-    padding: 0.5rem;
+  color: #1b65ee;
+  font-size: 1rem;
+  border-radius: 5px;
+  font-weight:400;
+  padding: 0.5rem;
 	transition: .1s;
 	text-decoration: none;
-    border-radius: 5px;
-    border: 2px solid white;
+  border-radius: 5px;
+  border: 2px solid white;
+	background: none;
 }
 
 .btn-secondary:hover {
 	background-color: #efefef;
-    border-radius: 5px;
-    border: 2px solid  #cecece;
+  border-radius: 5px;
+  border: 2px solid  #cecece;
 }
 
 .message {
-    border: 2px solid #cecece;
-    background-color: #efefef;
-    padding: 1rem 2rem;
-    border-radius: 5px;
-    box-shadow: var(--shadow);
-    border: 2px solid #d8d8d8;
+  border: 2px solid #cecece;
+  background-color: #efefef;
+  padding: 1rem 2rem;
+  border-radius: 5px;
+  box-shadow: var(--shadow);
+  border: 2px solid #d8d8d8;
 }
 
 .message.error {
-    background-color: #ec9393;
-    border: 2px solid #f37979;
+  background-color: #ec9393;
+  border: 2px solid #f37979;
 }
 
 .collection-grid {
-    display: flex;
-    flex-wrap: wrap;
+	display: flex;
+	flex-wrap: wrap;
+}
+
+[contenteditable=true]:empty:before {
+  content: attr(placeholder);
+  display: block;
+  color: #aaa;
+}
+
+.icon-button {
+	border: none;
+	background: none;
+	outline: none;
+	padding: 0.1rem;
+	display: block;
+	width: 2rem;
+	height: 2rem;
+	font-size: 2rem;
+	display: flex;
+	border-radius: 50px;
+	color: inherit;
+}
+
+.color-button {
+	width: 2rem;
+	height: 2rem;
+	border-radius: 50px;
+	border: none;
+	outline: none;
+	box-shadow: 0px 0px 1px 1px #d4d4d4;
+}
+
+.color-button-selected {
+	box-shadow: 0px 0px 1px 4px #d4d4d4;
+}
+
+.icon-button:hover {
+	background: rgba(255,255,255, 0.5);
 }

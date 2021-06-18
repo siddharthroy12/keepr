@@ -6,7 +6,14 @@ header {
 
 .header-logo {
 	display: inline;
-	padding: 1rem;
-	background-color: #ffda24;
 	border-radius: 5px;
+	display: flex;
+	width: 6rem;
+	justify-content: center;
+	align-items: center;
+	font-size: 1.2rem;
+}
+
+.header-logo > * {
+	margin: 0 1rem;
 }

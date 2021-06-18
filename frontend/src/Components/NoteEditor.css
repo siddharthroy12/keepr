@@ -1,0 +1,47 @@
+.note-editor {
+	margin: 1rem;
+	padding: 1rem;
+	border-radius: 5px;
+	width: 40rem;
+	position: relative;
+	box-shadow: var(--shadow);
+}
+
+.note-editor-top {
+	display: flex;
+	position: relative;
+}
+
+.note-editor-top .icon-button {
+	top: 0;
+	right: 0;
+	position: absolute;
+}
+
+.note-editor-title {
+	width: 100%;
+	font-weight: 500;
+	outline: none;
+	padding-right: 2rem;
+}
+
+.note-editor-body {
+	outline: none;
+	margin: 1rem 0;
+	font-size: .9rem;
+	margin-bottom: 3rem;
+}
+
+.note-editor-bottom {
+	display: flex;
+}
+
+.note-editor-options {
+	display: flex;
+	width: 100%;
+	align-items: center;
+}
+
+.note-editor-options > * {
+	margin: 0 0.5rem;
+}

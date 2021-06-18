@@ -20,7 +20,7 @@ function App() {
     if (login.loggedIn) {
       dispatch(fetchNotes())
     }
-  }, [login])
+  }, [login, dispatch])
 
 
   return (
