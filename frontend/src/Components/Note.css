@@ -3,9 +3,10 @@
 	margin: 1rem;
 	padding: 1rem;
 	border-radius: 5px;
-	width: 15rem;
-	padding-bottom: 3rem;
+	width: 16rem;
+	padding-bottom: 4rem;
 	position: relative;
+	height: fit-content;
 }
 
 .note:hover {
@@ -23,8 +24,20 @@
 	bottom: 0;
 	left: 0;
 	right: 0;
+	padding: .5rem 1rem;
 }
 
 .note:hover .note-overlay {
-	display: block;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.note-bottom-buttons {
+	display: flex;
+	align-items: center;
+}
+
+.note-bottom-buttons > * {
+	margin: 0 0.2rem;
 }

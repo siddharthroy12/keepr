@@ -15,7 +15,7 @@ export default function NoteEditor({ note: prevNote, onSave }) {
 	return (
 		<div className="note-editor" style={
 			{
-				backgroundColor: note.color ? note.color : 'none',
+				backgroundColor: note.color ? note.color : 'white',
 				color: note.color === COLORS.Black || note.color === COLORS.Brown ? 'white': 'black'
 			}
 		}>
@@ -44,6 +44,7 @@ export default function NoteEditor({ note: prevNote, onSave }) {
 						className={COLORS[Color] === note.color ? 'color-button color-button-selected' : 'color-button'}
 						style={{backgroundColor: COLORS[Color]}}
 						onClick={() => setNote({...note, color: COLORS[Color]})}
+						key={Color}
 					/>
 				))}
 				</div>

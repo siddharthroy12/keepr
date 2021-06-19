@@ -77,6 +77,8 @@
 	display: flex;
 	border-radius: 50px;
 	color: inherit;
+	justify-content: center;
+	align-items: center;
 }
 
 .color-button {
@@ -93,5 +95,5 @@
 }
 
 .icon-button:hover {
-	background: rgba(255,255,255, 0.5);
+	background: rgba(175, 175, 175, 0.5);
 }

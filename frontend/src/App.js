@@ -15,6 +15,20 @@ import './Utils.css'
 function App() {
   const dispatch = useDispatch()
   const login = useSelector(state => state.login)
+  const createNoteState = useSelector(state => state.createNote)
+	const updateNoteState = useSelector(state => state.updateNote)
+
+  useEffect(() => {
+		if (createNoteState.message) {
+			dispatch(fetchNotes())
+		}
+	}, [createNoteState, dispatch])
+
+  useEffect(() => {
+    if (updateNoteState.message) {
+      dispatch(fetchNotes())
+    }
+  }, [updateNoteState, dispatch])
 
   useEffect(() => {
     if (login.loggedIn) {

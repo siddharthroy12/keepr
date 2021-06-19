@@ -62,11 +62,11 @@ const getTrashedNotes = asyncHandler(async (req, res) => {
 // @route POST /api/notes
 // @access Private
 const createNote = asyncHandler(async (req, res) => {
-	const { title, body, image, labels, color } = req.body
+	let { title, body, image, labels, color } = req.body
 
 	if (title.trim() === '' && body.trim() === '') {
 		res.status(400)
-        throw new Error('Either title or body is required')
+    throw new Error('Either title or body is required')
 	}
 
 	if (title) {
@@ -77,6 +77,8 @@ const createNote = asyncHandler(async (req, res) => {
 		body = body.trim()
 	}
 
+	
+
 	try {
 		const newNote = await Note.create({
 			owner: req.user._id,
@@ -86,10 +88,11 @@ const createNote = asyncHandler(async (req, res) => {
 			color: color || '',
 			image: image || ''
 		})
+		console.log(1)
 
 		const user = await User.findById(req.user._id)
-    	user.notes.push(newNote._id)
-    	await user.save()
+    user.notes.push(newNote._id)
+    await user.save()
 
 		res.status(201)
 		res.json(newNote)
@@ -105,7 +108,7 @@ const createNote = asyncHandler(async (req, res) => {
 // @route PUT /api/notes/:id
 // @access Private
 const updateNote = asyncHandler(async (req, res) => {
-	const { title, body, image, labels, color } = req.body
+	let { title, body, image, labels, color } = req.body
 
 	if (title !== undefined && body !== undefined) {
 		if (title.trim() === '' && body.trim() === '') {
