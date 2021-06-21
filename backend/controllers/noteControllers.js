@@ -41,7 +41,7 @@ const getNote = asyncHandler(async (req, res) => {
 // @route GET /api/notes
 // @access Private
 const getNotes = asyncHandler(async (req, res) => {
-	const notes = await Note.find({trashed: false, owner: req.user._id})
+	const notes = await Note.find({ owner: req.user._id })
 
 	res.status(200)
 	res.json(notes)
@@ -197,8 +197,6 @@ const trashNote = asyncHandler(async (req, res) => {
 		res.status(500)
 		throw new Error('Failed to trash note')
 	}
-
-
 })
 
 // @desc Restore a note

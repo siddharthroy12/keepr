@@ -69,7 +69,7 @@
 	border: none;
 	background: none;
 	outline: none;
-	padding: 0.1rem;
+	padding: 0.2rem;
 	display: block;
 	width: 2rem;
 	height: 2rem;
@@ -96,4 +96,24 @@
 
 .icon-button:hover {
 	background: rgba(175, 175, 175, 0.5);
+}
+
+.spin {
+	animation-name: spin;
+  animation-duration: 1000ms;
+  animation-iteration-count: infinite;
+  animation-timing-function: linear; 
+  /* transform: rotate(3deg); */
+   /* transform: rotate(0.3rad);/ */
+   /* transform: rotate(3grad); */ 
+   /* transform: rotate(.03turn);  */
+}
+
+@keyframes spin {
+	from {
+			transform:rotate(0deg);
+	}
+	to {
+			transform:rotate(360deg);
+	}
 }

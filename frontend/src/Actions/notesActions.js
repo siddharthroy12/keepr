@@ -1,6 +1,6 @@
 import axios from 'axios'
-
 import * as $ from '../Constants/notesContants'
+import genConfig from '../Utils/genConfig'
 
 export const fetchNotes = () => async (dispatch) => {
 	try {
@@ -23,6 +23,7 @@ export const fetchNotes = () => async (dispatch) => {
       type: $.FETCH_NOTES_SUCCESS,
       payload: data
     })
+		
 	} catch (error) {
 		dispatch({
       type: $.FETCH_NOTES_FAILED,
@@ -53,6 +54,7 @@ export const createNote = (title, body, color) => async (dispatch) => {
       type: $.CREATE_NOTE_SUCCESS,
       payload: data
     })
+
 	} catch (error) {
 		dispatch({
 			type: $.CREATE_NOTE_FAILED,
@@ -83,9 +85,32 @@ export const updateNote = (id ,title, body, color) => async (dispatch) => {
       type: $.UPDATE_NOTE_SUCCESS,
       payload: data
     })
+
 	} catch (error) {
 		dispatch({
 			type: $.UPDATE_NOTE_FAILED,
+			payload: error
+		})
+	}
+}
+
+export const trashNote = (id) => async (dispatch) => {
+	try {
+		dispatch({
+			type: $.TRASH_NOTE_REQUEST,
+			payload: { id }
+		})
+
+		const { data } = await axios.get(`/api/notes/${id}/trash`, genConfig())
+
+		dispatch({
+      type: $.TRASH_NOTE_SUCCESS,
+      payload: data
+    })
+
+	} catch(error) {
+		dispatch({
+			type: $.TRASH_NOTE_FAILED,
 			payload: error
 		})
 	}

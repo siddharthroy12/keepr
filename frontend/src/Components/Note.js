@@ -4,7 +4,7 @@ import { AiOutlinePushpin } from "react-icons/ai"
 import { MdDelete } from "react-icons/md"
 import NoteEditor from "./NoteEditor"
 import Modal from "./Modal"
-import { updateNote } from "../Actions/notesActions"
+import { updateNote, trashNote } from "../Actions/notesActions"
 import COLORS from '../colors'
 import './Note.css'
 
@@ -17,6 +17,10 @@ export default function Note({ note: initialNote }) {
 		setNote(noteSaved)
 		setShowModal(false)
 		dispatch(updateNote(note._id, noteSaved.title, noteSaved.body, noteSaved.color ))
+	}
+
+	const onTrash = () => {
+		dispatch(trashNote(note._id))
 	}
 
 	return (
@@ -44,7 +48,7 @@ export default function Note({ note: initialNote }) {
 								key={Color}
 							/>
 						))}
-						<button className="icon-button" style={{marginLeft: 'auto'}}>
+						<button className="icon-button" style={{marginLeft: 'auto'}} onClick={onTrash}>
 							<MdDelete />
 						</button>
 					</div>

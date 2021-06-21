@@ -38,3 +38,42 @@ export const updateNoteReducer = (state = {}, action) => {
 			return state
 	}
 }
+
+export const trashNoteReducer = (state = {}, action) => {
+	switch(action.type) {
+		case $.TRASH_NOTE_REQUEST:
+			return { params: action.payload }
+		case $.TRASH_NOTE_SUCCESS:
+			return { message: action.payload }
+		case $.TRASH_NOTE_FAILED:
+			return { error: action.payload }
+		default:
+			return state
+	}
+}
+
+export const restoreNoteReducer = (state = {}, action) => {
+	switch(action.type) {
+		case $.RESTORE_NOTE_REQUEST:
+			return { params: action.payload }
+		case $.RESTORE_NOTE_SUCCESS:
+			return { message: action.payload }
+		case $.RESTORE_NOTE_FAILED:
+			return { error: action.payload }
+		default:
+			return state
+	}
+}
+
+export const deleteNoteReducer = (state = {}, action) => {
+	switch(action.type) {
+		case $.DELETE_NOTE_REQUEST:
+			return { params: action.payload }
+		case $.DELETE_NOTE_SUCCESS:
+			return { message: action.payload }
+		case $.DELETE_NOTE_FAILED:
+			return { error: action.payload }
+		default:
+			return state
+	}
+}

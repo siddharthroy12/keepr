@@ -67,8 +67,8 @@ export const authenticate = () => async (dispatch) => {
 }
 
 export const logout = () => (dispatch) => {
-    dispatch({
-        type: LOGOUT
-    })
-    localStorage.removeItem('loginInfo')
+  dispatch({
+      type: LOGOUT
+  })
+  localStorage.removeItem('loginInfo')
 }

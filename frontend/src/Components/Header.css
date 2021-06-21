@@ -2,6 +2,14 @@ header {
 	padding: 1.5rem;
 	background-color: white;
 	border-bottom: 1px solid #e0e0e0;
+	display: flex;
+	justify-content: space-between;
+	color: #5a5a5a;
+	position: fixed;
+	top: 0;
+	right: 0;
+	left: 0;
+	z-index: 4;
 }
 
 .header-logo {
@@ -16,4 +24,8 @@ header {
 
 .header-logo > * {
 	margin: 0 1rem;
+}
+
+.header-left {
+	display: flex;
 }

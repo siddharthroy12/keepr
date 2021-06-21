@@ -17,6 +17,7 @@ function App() {
   const login = useSelector(state => state.login)
   const createNoteState = useSelector(state => state.createNote)
 	const updateNoteState = useSelector(state => state.updateNote)
+  const trashNoteState = useSelector(state => state.trashNote)
 
   useEffect(() => {
 		if (createNoteState.message) {
@@ -29,6 +30,12 @@ function App() {
       dispatch(fetchNotes())
     }
   }, [updateNoteState, dispatch])
+
+  useEffect(() => {
+    if (trashNoteState.message) {
+      dispatch(fetchNotes())
+    }
+  }, [trashNoteState, dispatch])
 
   useEffect(() => {
     if (login.loggedIn) {
