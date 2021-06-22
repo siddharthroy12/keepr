@@ -23,6 +23,11 @@ export default function Note({ note: initialNote }) {
 		dispatch(updateNote(note._id, noteSaved.title, noteSaved.body, noteSaved.color ))
 	}
 
+	const setColor = (color) => {
+		setNote({...note, color: COLORS[color]})
+		dispatch(updateNote(note._id, note.title, note.body, note.color ))
+	}
+
 	const onTrash = () => {
 		dispatch(trashNote(note._id))
 	}
@@ -66,7 +71,7 @@ export default function Note({ note: initialNote }) {
 											<button
 												className={COLORS[Color] === note.color ? 'color-button color-button-selected' : 'color-button'}
 												style={{backgroundColor: COLORS[Color], width: '1.5rem', height: '1.5rem'}}
-												onClick={() => setNote({...note, color: COLORS[Color]})}
+												onClick={() => setColor(Color)}
 												key={Color}
 											/>
 										))}
