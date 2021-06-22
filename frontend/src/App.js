@@ -7,6 +7,7 @@ import ProtectedRoute from './Components/ProtectedRoute';
 import LoginScreen from './Screens/LoginScreen';
 import HomeScreen from './Screens/HomeScreen';
 import LoggerScreen from './Screens/LoggerScreen'
+import TrashScreen from './Screens/TrashScreen'
 
 import { fetchNotes } from './Actions/notesActions';
 
@@ -18,24 +19,38 @@ function App() {
   const createNoteState = useSelector(state => state.createNote)
 	const updateNoteState = useSelector(state => state.updateNote)
   const trashNoteState = useSelector(state => state.trashNote)
+  const restoreNoteState = useSelector(state => state.restoreNote)
+  const deleteNoteState = useSelector(state => state.deleteNote)
 
   useEffect(() => {
-		if (createNoteState.message) {
+		if (createNoteState.error) {
 			dispatch(fetchNotes())
 		}
 	}, [createNoteState, dispatch])
 
   useEffect(() => {
-    if (updateNoteState.message) {
+    if (updateNoteState.error) {
       dispatch(fetchNotes())
     }
   }, [updateNoteState, dispatch])
 
   useEffect(() => {
-    if (trashNoteState.message) {
+    if (trashNoteState.error) {
       dispatch(fetchNotes())
     }
   }, [trashNoteState, dispatch])
+
+  useEffect(() => {
+    if (restoreNoteState.error) {
+      dispatch(fetchNotes())
+    }
+  }, [restoreNoteState, dispatch])
+
+  useEffect(() => {
+    if (deleteNoteState.error) {
+      dispatch(fetchNotes())
+    }
+  }, [deleteNoteState, dispatch])
 
   useEffect(() => {
     if (login.loggedIn) {
@@ -49,6 +64,7 @@ function App() {
       <Switch>
         <ProtectedRoute component={LoginScreen} path='/login' />
         <ProtectedRoute component={LoggerScreen} path='/logger' />
+        <PrivateRoute component={TrashScreen} path='/trash' />
         <PrivateRoute component={HomeScreen} exact path="/" />
       </Switch>
     </Router>

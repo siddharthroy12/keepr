@@ -1,12 +1,15 @@
 import { useEffect, useState } from 'react';
+import { useLocation } from 'react-router';
 import { Redirect, useHistory } from 'react-router-dom';
 import { authenticate } from '../Actions/loginActions'
 import { useSelector, useDispatch } from 'react-redux'
+import queryString from 'query-string'
 
 import './LoggerScreen.css'
 
 export default function LoggerScreen() {
 	const userInfoFromStorage = localStorage.getItem('loginInfo')
+	const location = useLocation()
 	const login = useSelector(state => state.login)
 	const dispatch = useDispatch()
 	const history = useHistory()
@@ -24,14 +27,14 @@ export default function LoggerScreen() {
 
 	useEffect(() => {
 		if (login.loggedIn) {
-			history.push('/')
+			history.push(queryString.parse(location.search).redirect)
 		}
 
 		if (login.error) {
 			let error = login.error
 			if (error.response) {
 				// Request made and server responded (Failed to authenticate)
-				history.push('/login')
+				history.push(`/login${location.search}`)
 			  } else if (error.request) {
 				// The request was made but no response was received (Slow Internet)
 				setError('Connection Failure')
@@ -41,9 +44,9 @@ export default function LoggerScreen() {
 		} else {
 			setError(null)
 		}
-	}, [login, history, dispatch])
+	}, [login, history, location.search, dispatch])
 
-	return userInfoFromStorage === null ? <Redirect to='/login'/> : (
+	return userInfoFromStorage === null ? <Redirect to={`/login${location.search}`} /> : (
 		<div className="container" id="logger">
 			{error !== null ? (
 				<>

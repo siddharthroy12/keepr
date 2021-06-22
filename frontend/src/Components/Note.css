@@ -36,6 +36,7 @@
 .note-bottom-buttons {
 	display: flex;
 	align-items: center;
+	margin-top: auto;
 }
 
 .note-bottom-buttons > * {

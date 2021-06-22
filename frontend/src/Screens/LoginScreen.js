@@ -2,6 +2,8 @@ import { useEffect, useState } from 'react'
 import { useHistory } from 'react-router-dom';
 import { login } from '../Actions/loginActions'
 import { useSelector, useDispatch } from 'react-redux'
+import { useLocation } from 'react-router';
+import queryString from 'query-string'
 
 import './LoginScreen.css'
 
@@ -12,6 +14,7 @@ export default function LoginScreen() {
 	const loginState = useSelector(state => state.login)
 	const dispatch = useDispatch()
 	const history = useHistory()
+	const location = useLocation()
 
 	useEffect(() => {
 		if (loginState.error) {
@@ -27,9 +30,9 @@ export default function LoginScreen() {
 		}
 
 		if (loginState.loggedIn) {
-			history.push('/')
+			history.push(queryString.parse(location.search).redirect)
 		}
-	}, [loginState, history])
+	}, [loginState, location.search, history])
 
 	const onSumbit = (e) => {
 		e.preventDefault()

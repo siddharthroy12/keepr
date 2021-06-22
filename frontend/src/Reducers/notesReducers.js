@@ -1,13 +1,73 @@
 import * as $ from '../Constants/notesContants'
+import { v4 as uuidv4 } from 'uuid';
 
 export const notesReducer = (state = {}, action) => {
+	let notesCopy = []
 	switch(action.type) {
 		case $.FETCH_NOTES_REQUEST:
 			return { loading: true, notes: state.notes ? state.notes : [] }
+
 		case $.FETCH_NOTES_SUCCESS:
 			return { loading: false, notes: action.payload }
+
 		case $.FETCH_NOTES_FAILED:
 			return { loading: false, notes: state.notes ? state.notes : [], error: action.payload }
+
+		case $.CREATE_NOTE_REQUEST:
+			return { ...state, notes: [...state.notes, { 
+				_id: uuidv4(),
+				color: action.payload.color,
+				title: action.payload.title,
+				body: action.payload.body,
+				pinned: false,
+				trashed: false,
+			}]}
+
+		case $.UPDATE_NOTE_REQUEST:
+			notesCopy = [...state.notes]
+			
+			for (let i = 0; i < notesCopy.length; i++) {
+				if (notesCopy[i]._id === action.payload.id) {
+					notesCopy[i].title = action.payload.title
+					notesCopy[i].body = action.payload.body
+					notesCopy[i].color = action.payload.color
+				}
+			}
+
+			return {
+				...state, notes: [...notesCopy]
+			}
+
+		case $.TRASH_NOTE_REQUEST:
+			notesCopy = [...state.notes]
+			
+			for (let i = 0; i < notesCopy.length; i++) {
+				if (notesCopy[i]._id === action.payload.id) {
+					notesCopy[i].trashed = true
+				}
+			}
+
+			return {
+				...state, notes: [...notesCopy]
+			}
+		
+		case $.RESTORE_NOTE_REQUEST:
+			notesCopy = [...state.notes]
+			
+			for (let i = 0; i < notesCopy.length; i++) {
+				if (notesCopy[i]._id === action.payload.id) {
+					notesCopy[i].trashed = false
+				}
+			}
+
+			return {
+				...state, notes: [...notesCopy]
+			}
+
+			case $.DELETE_NOTE_REQUEST:
+				notesCopy = state.notes.filter(note => note._id !== action.payload.id)
+				return { ...state, notes: [...notesCopy] }
+
 		default:
 			return state
 	}

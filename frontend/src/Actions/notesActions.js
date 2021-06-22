@@ -8,16 +8,7 @@ export const fetchNotes = () => async (dispatch) => {
 			type: $.FETCH_NOTES_REQUEST
 		})
 
-		const userInfoFromStorage = localStorage.getItem('loginInfo') ? JSON.parse(localStorage.getItem('loginInfo')) : null
-
-		const config = {
-        headers: {
-        'Content-Type': 'application/json',
-				'Authorization': `Bearer ${userInfoFromStorage.token}`
-      }
-    }
-
-		const { data } = await axios.get('/api/notes', config)
+		const { data } = await axios.get('/api/notes', genConfig())
 
 		dispatch({
       type: $.FETCH_NOTES_SUCCESS,
@@ -39,16 +30,7 @@ export const createNote = (title, body, color) => async (dispatch) => {
 			payload: { title, body, color }
 		})
 
-		const userInfoFromStorage = localStorage.getItem('loginInfo') ? JSON.parse(localStorage.getItem('loginInfo')) : null
-
-		const config = {
-			headers: {
-				'Content-Type': 'application/json',
-				'Authorization': `Bearer ${userInfoFromStorage.token}`
-			}
-		}
-
-		const { data } = await axios.post('/api/notes', { title, body, color }, config)
+		const { data } = await axios.post('/api/notes', { title, body, color }, genConfig())
 
 		dispatch({
       type: $.CREATE_NOTE_SUCCESS,
@@ -70,16 +52,7 @@ export const updateNote = (id ,title, body, color) => async (dispatch) => {
 			payload: { id, title, body, color }
 		})
 
-		const userInfoFromStorage = localStorage.getItem('loginInfo') ? JSON.parse(localStorage.getItem('loginInfo')) : null
-
-		const config = {
-			headers: {
-				'Content-Type': 'application/json',
-				'Authorization': `Bearer ${userInfoFromStorage.token}`
-			}
-		}
-
-		const { data } = await axios.put(`/api/notes/${id}`, { title, body, color }, config)
+		const { data } = await axios.put(`/api/notes/${id}`, { title, body, color }, genConfig())
 
 		dispatch({
       type: $.UPDATE_NOTE_SUCCESS,
@@ -111,6 +84,50 @@ export const trashNote = (id) => async (dispatch) => {
 	} catch(error) {
 		dispatch({
 			type: $.TRASH_NOTE_FAILED,
+			payload: error
+		})
+	}
+}
+
+export const restoreNote = (id) => async (dispatch) => {
+	try {
+		dispatch({
+			type: $.RESTORE_NOTE_REQUEST,
+			payload: { id }
+		})
+
+		const { data } = await axios.get(`/api/notes/${id}/restore`, genConfig())
+
+		dispatch({
+      type: $.RESTORE_NOTE_SUCCESS,
+      payload: data
+    })
+
+	} catch(error) {
+		dispatch({
+			type: $.RESTORE_NOTE_FAILED,
+			payload: error
+		})
+	}
+}
+
+export const deleteNote = (id) => async (dispatch) => {
+	try {
+		dispatch({
+			type: $.DELETE_NOTE_REQUEST,
+			payload: { id }
+		})
+
+		const { data } = await axios.delete(`/api/notes/${id}`, genConfig())
+
+		dispatch({
+      type: $.DELETE_NOTE_SUCCESS,
+      payload: data
+    })
+
+	} catch(error) {
+		dispatch({
+			type: $.DELETE_NOTE_FAILED,
 			payload: error
 		})
 	}

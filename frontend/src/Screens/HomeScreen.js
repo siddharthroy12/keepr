@@ -1,9 +1,9 @@
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import Note from '../Components/Note'
 import NoteEditor from '../Components/NoteEditor'
 import Modal from '../Components/Modal'
-import { createNote, fetchNotes } from '../Actions/notesActions'
+import { createNote } from '../Actions/notesActions'
 import './HomeScreen.css'
 
 export default function HomeScreen() {
@@ -28,7 +28,12 @@ export default function HomeScreen() {
 				</button>
 			</div>
 			<div className="collection-grid">
-				{notes.notes.map(note => <Note note={note} key={note._id}/>)}
+				{notes.notes.map(note => {
+					if (!note.trashed) {
+						return <Note note={note} key={note._id} />
+					}
+					else return null
+				})}
 			</div>
 		</main>
 	)
