@@ -178,16 +178,7 @@ const trashNote = asyncHandler(async (req, res) => {
 		throw new Error("You don't have access to this note")
 	}
 
-	if (note.trashed) {
-		res.status(400)
-		throw new Error("This note is already trashed")
-	}
-
 	try {
-		const owner = await User.findById(note.owner)
-		owner.notes = owner.notes.filter(ownerNote => ownerNote.toString() !== note._id.toString())
-		owner.trash.push(note._id)
-		await owner.save()
 		note.trashed = true
 		await note.save()
 
@@ -215,16 +206,7 @@ const restoreNote = asyncHandler(async (req, res) => {
 		throw new Error("You don't have access to this note")
 	}
 
-	if (!note.trashed) {
-		res.status(400)
-		throw new Error("Note is not trashed")
-	}
-
 	try {
-		const owner = await User.findById(note.owner)
-		owner.notes.push(note._id)
-		owner.trash = owner.trash.filter(ownerNote => ownerNote.toString() !== note._id.toString())
-		owner.save()
 		note.trashed = false
 		await note.save()
 		
@@ -251,13 +233,6 @@ const deleteNote = asyncHandler(async (req, res) => {
 		res.status(403)
 		throw new Error("You don't have access to this note")
 	}
-
-	const user = await User.findById(note.owner)
-
-    if (user) {
-        user.notes = user.notes.filter(userNote => userNote.toString() !== note._id.toString())
-        await user.save()
-    }
     
 	try {
 		await note.remove()
