@@ -13,7 +13,6 @@ export default function HomeScreen() {
 
 	const onSave = (note) => {
 		setShowModal(false)
-		console.log(note)
 		dispatch(createNote(note.title, note.body, note.color))
 	}
 

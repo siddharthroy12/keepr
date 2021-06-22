@@ -23,7 +23,7 @@ function App() {
   const deleteNoteState = useSelector(state => state.deleteNote)
 
   useEffect(() => {
-		if (createNoteState.error) {
+		if (createNoteState.message || createNoteState.error) {
 			dispatch(fetchNotes())
 		}
 	}, [createNoteState, dispatch])

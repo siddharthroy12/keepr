@@ -21,6 +21,7 @@ export const notesReducer = (state = {}, action) => {
 				body: action.payload.body,
 				pinned: false,
 				trashed: false,
+				pending: true
 			}]}
 
 		case $.UPDATE_NOTE_REQUEST:
@@ -31,6 +32,20 @@ export const notesReducer = (state = {}, action) => {
 					notesCopy[i].title = action.payload.title
 					notesCopy[i].body = action.payload.body
 					notesCopy[i].color = action.payload.color
+					notesCopy[i].pending = true
+				}
+			}
+
+			return {
+				...state, notes: [...notesCopy]
+			}
+		
+		case $.UPDATE_NOTE_SUCCESS:
+			notesCopy = [...state.notes]
+			
+			for (let i = 0; i < notesCopy.length; i++) {
+				if (notesCopy[i]._id === action.payload._id) {
+					notesCopy[i].pending = false
 				}
 			}
 
@@ -44,6 +59,20 @@ export const notesReducer = (state = {}, action) => {
 			for (let i = 0; i < notesCopy.length; i++) {
 				if (notesCopy[i]._id === action.payload.id) {
 					notesCopy[i].trashed = true
+					notesCopy[i].pending = true
+				}
+			}
+
+			return {
+				...state, notes: [...notesCopy]
+			}
+		
+		case $.TRASH_NOTE_SUCCESS:
+			notesCopy = [...state.notes]
+			
+			for (let i = 0; i < notesCopy.length; i++) {
+				if (notesCopy[i]._id === action.payload._id) {
+					notesCopy[i].pending = false
 				}
 			}
 
@@ -57,6 +86,20 @@ export const notesReducer = (state = {}, action) => {
 			for (let i = 0; i < notesCopy.length; i++) {
 				if (notesCopy[i]._id === action.payload.id) {
 					notesCopy[i].trashed = false
+					notesCopy[i].pending = true
+				}
+			}
+
+			return {
+				...state, notes: [...notesCopy]
+			}
+		
+		case $.RESTORE_NOTE_SUCCESS:
+			notesCopy = [...state.notes]
+			
+			for (let i = 0; i < notesCopy.length; i++) {
+				if (notesCopy[i]._id === action.payload._id) {
+					notesCopy[i].pending = false
 				}
 			}
 
@@ -64,9 +107,9 @@ export const notesReducer = (state = {}, action) => {
 				...state, notes: [...notesCopy]
 			}
 
-			case $.DELETE_NOTE_REQUEST:
-				notesCopy = state.notes.filter(note => note._id !== action.payload.id)
-				return { ...state, notes: [...notesCopy] }
+		case $.DELETE_NOTE_REQUEST:
+			notesCopy = state.notes.filter(note => note._id !== action.payload.id)
+			return { ...state, notes: [...notesCopy] }
 
 		default:
 			return state
