@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import ContentEditable from 'react-contenteditable'
 import { BiPin } from "react-icons/bi"
+import { AiOutlinePushpin, AiFillPushpin } from "react-icons/ai"
 
 import COLORS from '../colors'
 import './NoteEditor.css'
@@ -26,8 +27,12 @@ export default function NoteEditor({ note: prevNote, onSave }) {
 					placeholder="Title"
 					onChange={(e) => setNote({...note, title: e.target.value})}
 				/>
-				<button className="icon-button">
-					<BiPin />
+				<button className="icon-button" onClick={() => setNote({...note, pinned: !note.pinned})}>
+					{note.pinned ? (
+						<AiFillPushpin />
+					) : (
+						<AiOutlinePushpin />
+					)}
 				</button>
 				
 			</div>
