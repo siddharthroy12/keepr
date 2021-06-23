@@ -32,6 +32,7 @@ export const notesReducer = (state = {}, action) => {
 					notesCopy[i].title = action.payload.title
 					notesCopy[i].body = action.payload.body
 					notesCopy[i].color = action.payload.color
+					notesCopy[i].pinned = action.payload.pinned
 					notesCopy[i].pending = true
 				}
 			}

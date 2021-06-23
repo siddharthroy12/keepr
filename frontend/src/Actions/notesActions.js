@@ -45,14 +45,14 @@ export const createNote = (title, body, color) => async (dispatch) => {
 	}
 }
 
-export const updateNote = (id ,title, body, color) => async (dispatch) => {
+export const updateNote = (id ,title, body, color, pinned) => async (dispatch) => {
 	try {
 		dispatch({
 			type: $.UPDATE_NOTE_REQUEST,
-			payload: { id, title, body, color }
+			payload: { id, title, body, color, pinned }
 		})
 
-		const { data } = await axios.put(`/api/notes/${id}`, { title, body, color }, genConfig())
+		const { data } = await axios.put(`/api/notes/${id}`, { title, body, color, pinned }, genConfig())
 
 		dispatch({
       type: $.UPDATE_NOTE_SUCCESS,

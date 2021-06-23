@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react"
 import { useDispatch } from "react-redux"
-import { AiOutlinePushpin } from "react-icons/ai"
+import { AiOutlinePushpin, AiFillPushpin } from "react-icons/ai"
 import { MdDelete, MdDeleteForever, MdRestore } from "react-icons/md"
 import NoteEditor from "./NoteEditor"
 import Modal from "./Modal"
@@ -25,7 +25,7 @@ export default function Note({ note: initialNote }) {
 
 	const setColor = (color) => {
 		setNote({...note, color: COLORS[color]})
-		dispatch(updateNote(note._id, note.title, note.body, note.color ))
+		dispatch(updateNote(note._id, note.title, note.body, COLORS[color], note.pinned ))
 	}
 
 	const onTrash = () => {
@@ -38,6 +38,11 @@ export default function Note({ note: initialNote }) {
 
 	const onDelete = () => {
 		dispatch(deleteNote(note._id))
+	}
+
+	const onPin = () => {
+		setNote({...note, pinned: !note.pinned})
+		dispatch(updateNote(note._id, note.title, note.body, note.color, !note.pinned ))
 	}
 
 	return (
@@ -59,8 +64,12 @@ export default function Note({ note: initialNote }) {
 						<>
 							<div className="note-top-buttons" onClick={ e => e.stopPropagation() }>
 							{!note.trashed && (
-								<button className="icon-button" style={{marginLeft: 'auto'}}>
-									<AiOutlinePushpin />
+								<button className="icon-button" style={{marginLeft: 'auto'}} onClick={onPin}>
+									{note.pinned ? (
+										<AiFillPushpin />
+									) : (
+										<AiOutlinePushpin />
+									)}
 								</button>
 							)}
 							</div>

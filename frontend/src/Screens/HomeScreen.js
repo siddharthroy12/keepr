@@ -11,6 +11,8 @@ export default function HomeScreen() {
 	const [showModal, setShowModal] = useState(false)
 	const dispatch = useDispatch()
 
+	const pinnedNotes = notes.notes.filter(note => note.pinned)
+
 	const onSave = (note) => {
 		setShowModal(false)
 		dispatch(createNote(note.title, note.body, note.color))
@@ -26,9 +28,23 @@ export default function HomeScreen() {
 					Take a note...
 				</button>
 			</div>
+			{pinnedNotes.length > 0 && (
+				<>
+				<p>Pinned Notes</p>
+				<div className="collection-grid">
+					{pinnedNotes.map(note => {
+						if (!note.trashed) {
+							return <Note note={note} key={note._id} />
+						}
+						else return null
+					})}
+				</div>
+				<p>Others</p>
+				</>
+			)}
 			<div className="collection-grid">
 				{notes.notes.map(note => {
-					if (!note.trashed) {
+					if (!note.trashed && !note.pinned) {
 						return <Note note={note} key={note._id} />
 					}
 					else return null

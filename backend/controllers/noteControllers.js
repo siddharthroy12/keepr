@@ -108,7 +108,7 @@ const createNote = asyncHandler(async (req, res) => {
 // @route PUT /api/notes/:id
 // @access Private
 const updateNote = asyncHandler(async (req, res) => {
-	let { title, body, image, labels, color } = req.body
+	let { title, body, image, labels, color, pinned } = req.body
 
 	if (title !== undefined && body !== undefined) {
 		if (title.trim() === '' && body.trim() === '') {
@@ -151,6 +151,7 @@ const updateNote = asyncHandler(async (req, res) => {
 		note.image = image === undefined ? note.image : image
 		note.labels = labels === undefined ? note.labels : labels
 		note.color = color === undefined ? note.color : color
+		note.pinned = pinned === undefined ? note.pinned : pinned
 		await note.save()
 
 		res.status(200)
