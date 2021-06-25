@@ -1,5 +1,5 @@
 header {
-	padding: 0.5rem;
+	padding: 0.5rem 1rem;
 	background-color: white;
 	border-bottom: 1px solid #e0e0e0;
 	display: flex;
@@ -26,10 +26,18 @@ header {
 	margin: 0 1rem;
 }
 
+.header-left {
+	justify-content: space-between;
+	width: 10rem;
+}
+
 .header-left, .header-right {
 	display: flex;
-	justify-content: center;
   align-items: center;
+}
+
+.header-right {
+	justify-content: flex-end;
 }
 
 .header-center {
