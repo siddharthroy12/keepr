@@ -1,7 +1,6 @@
 import { useSelector } from 'react-redux'
 import { useLocation } from 'react-router'
 import { Link } from 'react-router-dom'
-import { AiOutlineFileText } from 'react-icons/ai'
 import { HiColorSwatch } from 'react-icons/hi'
 import { MdDelete, MdInsertDriveFile } from 'react-icons/md'
 

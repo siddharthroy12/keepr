@@ -34,4 +34,6 @@ const noteSchema = mongoose.Schema({
 	}
 })
 
+noteSchema.index({'$**': 'text'})
+
 module.exports = Note = mongoose.model('Note', noteSchema)

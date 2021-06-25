@@ -3,6 +3,7 @@ const {
 	getNotesUser,
 	getNote,
 	getNotes,
+	searchNotes,
 	getTrashedNotes,
 	createNote,
 	updateNote,
@@ -10,15 +11,16 @@ const {
 	restoreNote,
 	deleteNote
 } = require('../controllers/noteControllers')
-const { protect } = require('../middlewares/authMiddlewares')
+const { protect, admin } = require('../middlewares/authMiddlewares')
 const router = express.Router()
 
 router.route('/')
 	.post(protect, createNote)
 	.get(protect, getNotes)
 router.get('/trashed', protect, getTrashedNotes)
+router.get('/search', protect, searchNotes)
 router.route('/user/:id')
-	.get(protect, getNotesUser)
+	.get(protect, admin, getNotesUser)
 router.route('/:id')
 	.get(protect, getNote)
 	.put(protect, updateNote)

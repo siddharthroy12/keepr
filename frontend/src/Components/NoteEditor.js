@@ -1,6 +1,5 @@
 import { useState } from 'react'
 import ContentEditable from 'react-contenteditable'
-import { BiPin } from "react-icons/bi"
 import { AiOutlinePushpin, AiFillPushpin } from "react-icons/ai"
 
 import COLORS from '../colors'

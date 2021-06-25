@@ -9,13 +9,13 @@ const PrivateRoute = ({component: Component, ...rest}) => {
 	const sideBar = useSelector(state => state.sideBar)
 	const location = useLocation()
 
-	const redirect = encodeURIComponent(location.pathname)
+	const redirect = encodeURIComponent(location.pathname + location.search)
 
   return (
       <Route {...rest} render={props => {
 		return login.loggedIn ?
 		(
-			<div style={{marginTop: '5rem', marginLeft: sideBar.expand ? '20rem' : '5rem'}}>
+			<div style={{marginTop: '4rem', marginLeft: sideBar.expand ? '20rem' : '5rem'}}>
 				<Header />
 				<SideBar />
 				<Component {...props} />

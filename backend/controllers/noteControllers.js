@@ -4,13 +4,8 @@ const User = require('../models/User')
 
 // @desc Get notes of a user
 // @route GET /api/notes/user/:id
-// @access Private
+// @access Private/Admin
 const getNotesUser = asyncHandler(async (req, res) => {
-	if (req.user._id.toString() !== req.params.id ) {
-		res.status(403)
-		throw new Error("You don't have access to these notes")
-	}
-
 	const notes = await Note.find({ owner: req.params.id })
 
 	res.status(200)
@@ -42,6 +37,16 @@ const getNote = asyncHandler(async (req, res) => {
 // @access Private
 const getNotes = asyncHandler(async (req, res) => {
 	const notes = await Note.find({ owner: req.user._id })
+
+	res.status(200)
+	res.json(notes)
+})
+
+// @desc Search notes
+// @route GET /api/notes/search?search=test
+// @access Private
+const searchNotes = asyncHandler(async (req, res) => {
+	const notes = await Note.find({ owner: req.user._id ,$text: {$search: req.query.search} })
 
 	res.status(200)
 	res.json(notes)
@@ -250,6 +255,7 @@ module.exports = {
 	getNotesUser,
 	getNote,
 	getNotes,
+	searchNotes,
 	getTrashedNotes,
 	createNote,
 	updateNote,

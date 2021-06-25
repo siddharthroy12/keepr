@@ -1,16 +1,17 @@
-import { useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useEffect } from 'react'
+import { useSelector, useDispatch } from 'react-redux'
 import { BrowserRouter as Router, Switch } from 'react-router-dom'
 
 import PrivateRoute from './Components/PrivateRoute'
-import ProtectedRoute from './Components/ProtectedRoute';
+import ProtectedRoute from './Components/ProtectedRoute'
 import LoginScreen from './Screens/LoginScreen';
 import HomeScreen from './Screens/HomeScreen';
 import LoggerScreen from './Screens/LoggerScreen'
 import ColorScreen from './Screens/ColorScreen'
 import TrashScreen from './Screens/TrashScreen'
+import SearchScreen from './Screens/SearchScreen'
 
-import { fetchNotes } from './Actions/notesActions';
+import { fetchNotes } from './Actions/notesActions'
 
 import './Utils.css'
 
@@ -68,6 +69,7 @@ function App() {
         <PrivateRoute component={TrashScreen} path='/trash' />
         <PrivateRoute component={ColorScreen} path='/color/:color' />
         <PrivateRoute component={HomeScreen} exact path="/" />
+        <PrivateRoute component={SearchScreen} exact path='/search' />
       </Switch>
     </Router>
   );
