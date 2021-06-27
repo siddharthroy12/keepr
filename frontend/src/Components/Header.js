@@ -1,11 +1,11 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { fetchNotes } from '../Actions/notesActions'
 import { useHistory } from 'react-router'
 import { BiRefresh } from 'react-icons/bi'
 import { HiMenuAlt1 } from 'react-icons/hi'
 import { FaFileAlt } from 'react-icons/fa'
-import { MdCancel } from 'react-icons/md'
+import { MdCancel, MdSearch } from 'react-icons/md'
 import { toggleSideBar } from '../Actions/sideBarActions'
 import { useLocation } from 'react-router'
 import './Header.css'
@@ -16,6 +16,23 @@ export default function Header() {
 	const notesState = useSelector(state => state.notes)
 	const [searchString, setSearchString] = useState('')
 	const location = useLocation()
+	const [showShadow, setShowShadow] = useState(window.scrollY > 0)
+
+	const onScroll = () => {
+		if (window.scrollY > 0) {
+			setShowShadow(true)
+		} else {
+			setShowShadow(false)
+		}
+	}
+
+	useEffect(() => {
+		window.addEventListener('scroll', onScroll)
+
+		return () => {
+			window.removeEventListener('scroll', onScroll)
+		}
+	}, [])
 
 	const onRefresh = () => {
 		dispatch(fetchNotes())
@@ -41,7 +58,7 @@ export default function Header() {
 	}
 
 	return (
-		<header>
+		<header style={{boxShadow: showShadow ? '0px 1px 6px -1px grey' : null}}>
 			<div className="header-left">
 				<button className='icon-button' onClick={onToggle}>
 					<HiMenuAlt1 />
@@ -52,6 +69,7 @@ export default function Header() {
 			</div>
 			<div className="header-center">
 				<div className="search-bar-container">
+					<MdSearch style={{width: '2rem', height: '2rem'}}/>
 					<input 
 						className="search-bar" type="text"
 						value={searchString}

@@ -10,10 +10,6 @@ const userSchema = mongoose.Schema({
 		type: String,
 		require: true
 	},
-	name: {
-		type:String,
-		required: true
-	},
 	notes: [{
 		type: mongoose.Schema.ObjectId,
 		ref: 'Note',

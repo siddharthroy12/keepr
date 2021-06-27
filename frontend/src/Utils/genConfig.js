@@ -4,7 +4,7 @@ export default function genConfig() {
 	const config = {
 		headers: {
 			'Content-Type': 'application/json',
-			'Authorization': `Bearer ${userInfoFromStorage.token}`
+			'Authorization': `Bearer ${userInfoFromStorage?.token}`
 		}
 	}
 

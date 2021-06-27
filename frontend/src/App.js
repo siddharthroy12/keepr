@@ -10,6 +10,7 @@ import LoggerScreen from './Screens/LoggerScreen'
 import ColorScreen from './Screens/ColorScreen'
 import TrashScreen from './Screens/TrashScreen'
 import SearchScreen from './Screens/SearchScreen'
+import RegisterScreen from './Screens/RegisterScreen'
 
 import { fetchNotes } from './Actions/notesActions'
 
@@ -66,6 +67,7 @@ function App() {
       <Switch>
         <ProtectedRoute component={LoginScreen} path='/login' />
         <ProtectedRoute component={LoggerScreen} path='/logger' />
+        <ProtectedRoute component={RegisterScreen} path='/register' />
         <PrivateRoute component={TrashScreen} path='/trash' />
         <PrivateRoute component={ColorScreen} path='/color/:color' />
         <PrivateRoute component={HomeScreen} exact path="/" />

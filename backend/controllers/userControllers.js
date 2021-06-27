@@ -6,11 +6,27 @@ const generateToken = require('../utils/generateToken')
 // @route POST /api/user/register
 // @access Public
 const registerUser = asyncHandler(async (req, res) => {
-	const { username, password, name } = req.body
+	const { username, password } = req.body
 
-	if (username.trim() === '' || name.trim() === '' || password.trim() === '') {
+	if (username.trim() === '' || password.trim() === '') {
         res.status(400)
         throw new Error('Provide all fields')
+    }
+
+    if (username < 1 || username > 20) {
+        res.status(400)
+        throw new Error('Username must be 1-20 characters')
+    } else if (/\W/.test(username)) {
+        res.status(400)
+        throw new Error('Username can only have numbers and letters')
+    }
+
+    if (password < 4) {
+        res.status(400)
+        throw new Error('Password is too short')
+    } else if (/\W/.test(username)) {
+        res.status(400)
+        throw new Error('Password can only have numbers and letters')
     }
 
 	const userExist = await User.findOne({ username })
@@ -23,13 +39,11 @@ const registerUser = asyncHandler(async (req, res) => {
     try {
         const user = await User.create({
             username: username.trim(),
-            name: name.trim(),
             password
         })
 
         res.status(201).json({
             _id: user._id,
-            name: user.name,
 			username: user.username,
             token: generateToken(user._id),
         })

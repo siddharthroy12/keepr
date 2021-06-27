@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { useHistory } from 'react-router-dom';
+import { useHistory, Link } from 'react-router-dom';
 import { login } from '../Actions/loginActions'
 import { useSelector, useDispatch } from 'react-redux'
 import { useLocation } from 'react-router';
@@ -92,7 +92,7 @@ export default function LoginScreen() {
 							onChange={(e) => setPassword(e.target.value.trim())}
 						/>
 						<div className="login-form-buttons">
-							<a href="#" className="btn-secondary">Create Account</a>
+							<Link className="btn-secondary" to='/login'>Create an Account</Link>
 							<button className="btn-primary" type="submit">Next</button>
 						</div>
 					</form>
