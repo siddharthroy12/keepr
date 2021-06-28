@@ -9,6 +9,7 @@
 	box-shadow: rgba(185, 185, 185, 0.6) 0px 10px 10px 1px;
 	z-index: 3;
 	background-color: white;
+  transition: 100ms;
 }
 
 .side-bar:hover {

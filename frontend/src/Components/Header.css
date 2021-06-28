@@ -40,6 +40,26 @@ header {
 	justify-content: flex-end;
 }
 
+.header-right > * {
+	margin-left: .5rem;
+}
+
+.account-detail {
+	position: fixed;
+	top: 5rem;
+	padding: 0.5rem;
+	border: 1px solid #d6d6d6;
+	border-radius: 50px;
+	background-color: white;
+	display: flex;
+	align-items: center;
+	box-shadow: 0px 0px 8px -5px grey;
+}
+
+.account-detail > * {
+	margin-left: 0.5rem;
+}
+
 .header-center {
 	width: 100%;
 	display: flex;

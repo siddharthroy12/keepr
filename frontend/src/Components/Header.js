@@ -1,11 +1,11 @@
 import { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+import { logout } from '../Actions/loginActions'
 import { fetchNotes } from '../Actions/notesActions'
 import { useHistory } from 'react-router'
 import { BiRefresh } from 'react-icons/bi'
 import { HiMenuAlt1 } from 'react-icons/hi'
-import { FaFileAlt } from 'react-icons/fa'
-import { MdCancel, MdSearch } from 'react-icons/md'
+import { MdCancel, MdSearch, MdPerson, MdExitToApp, MdInsertDriveFile } from 'react-icons/md'
 import { toggleSideBar } from '../Actions/sideBarActions'
 import { useLocation } from 'react-router'
 import './Header.css'
@@ -14,7 +14,9 @@ export default function Header() {
 	const dispatch = useDispatch()
 	const history = useHistory()
 	const notesState = useSelector(state => state.notes)
+	const loginState = useSelector(state => state.login)
 	const [searchString, setSearchString] = useState('')
+	const [showAccountDetail, setShowAccountDetail] = useState(false)
 	const location = useLocation()
 	const [showShadow, setShowShadow] = useState(window.scrollY > 0)
 
@@ -57,6 +59,10 @@ export default function Header() {
 		setSearchString('')
 	}
 
+	const onLogout = () => {
+		dispatch(logout())
+	}
+
 	return (
 		<header style={{boxShadow: showShadow ? '0px 1px 6px -1px grey' : null}}>
 			<div className="header-left">
@@ -64,7 +70,7 @@ export default function Header() {
 					<HiMenuAlt1 />
 				</button>
 				<div className="header-logo">
-					<FaFileAlt style={{ transform: 'scale(3)', color: '#FFBA00'}}/> Keepr
+					<MdInsertDriveFile style={{ transform: 'scale(4)', color: '#FFBA00'}}/> Keepr
 				</div>
 			</div>
 			<div className="header-center">
@@ -89,6 +95,21 @@ export default function Header() {
 				disabled={notesState.loading}>
 				<BiRefresh />
 			</button>
+			<button
+				onClick={() => setShowAccountDetail(prev => !prev)}
+				className="icon-button">
+				<MdPerson />
+			</button>
+			{showAccountDetail && (
+				<div className="account-detail">
+					<p>{loginState.info.username}</p>
+					<button
+					className="icon-button"
+					onClick={onLogout}>
+						<MdExitToApp />
+					</button>
+				</div>
+			)}
 			</div>
 		</header>
 	)
