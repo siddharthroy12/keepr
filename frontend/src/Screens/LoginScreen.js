@@ -92,7 +92,7 @@ export default function LoginScreen() {
 							onChange={(e) => setPassword(e.target.value.trim())}
 						/>
 						<div className="login-form-buttons">
-							<Link className="btn-secondary" to='/login'>Create an Account</Link>
+							<Link className="btn-secondary" to='/register'>Create an Account</Link>
 							<button className="btn-primary" type="submit">Next</button>
 						</div>
 					</form>

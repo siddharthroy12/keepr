@@ -36,12 +36,14 @@ export default function SearchScreen() {
 	return (
 		<div style={{padding: '2rem'}}>
 			{loading=== true && <AiOutlineLoading3Quarters className="center-horizontal spin" style={{fontSize: '2rem'}}/>}
+			<div className="collection-grid">
 			{notes.map(note => <Note note={note} key={note._id}/>)}
 			{
 				loading === false && notes.length === 0 ? (
 					<p className="center-horizontal">No Matching Results</p>
 				) : null
 			}
+			</div>
 		</div>
 	)
 }
