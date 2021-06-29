@@ -15,7 +15,7 @@ const PrivateRoute = ({component: Component, ...rest}) => {
       <Route {...rest} render={props => {
 		return login.loggedIn ?
 		(
-			<div style={{marginTop: '4rem', marginLeft: sideBar.expand ? '20rem' : '5rem'}}>
+			<div className={sideBar.expand ? 'body-sidebar-expand' : 'body'} style={{marginTop: '4rem'}}>
 				<Header />
 				<SideBar />
 				<Component {...props} />

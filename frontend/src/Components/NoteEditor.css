@@ -1,10 +1,16 @@
 .note-editor {
-	margin: 1rem;
 	padding: 1rem;
 	border-radius: 5px;
 	width: 40rem;
 	position: relative;
 	box-shadow: var(--shadow);
+}
+
+@media screen and (max-width: 630px) {
+	.note-editor {
+		width: 100%;
+		max-width: 25rem;
+	}
 }
 
 .note-editor-top {

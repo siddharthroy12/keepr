@@ -3,7 +3,10 @@
   flex-direction: column;
   position: fixed;
   left: 0;
-  height: 100vh;
+  width: 5rem;
+  top: 0;
+  padding-top: 4rem;
+  height: 100%;
 	overflow: hidden;
 	color: #353535;
 	box-shadow: rgba(185, 185, 185, 0.6) 0px 10px 10px 1px;
@@ -12,8 +15,28 @@
   transition: 100ms;
 }
 
+.side-bar > nav {
+  overflow-y: auto;
+}
+
+.side-bar-expand {
+  width: 20rem;
+}
+
 .side-bar:hover {
 	width: 20rem !important;
+}
+
+.nav-item-label {
+  display: none;
+}
+
+.side-bar-expand .nav-item-label {
+  display: block;
+}
+
+.side-bar:hover .nav-item-label {
+  display: block
 }
 
 .side-bar ul {
@@ -32,8 +55,12 @@
   text-decoration: none;
 }
 
-.nav-item-active > a {
+.side-bar:hover .nav-item-active > a {
 	background-color: #ffeab1;
+}
+
+.side-bar-expand .nav-item-active > a {
+  background-color: #ffeab1;
 }
 
 .nav-item-active .nav-item-icon {

@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { logout } from '../Actions/loginActions'
 import { fetchNotes } from '../Actions/notesActions'
@@ -19,6 +19,9 @@ export default function Header() {
 	const [showAccountDetail, setShowAccountDetail] = useState(false)
 	const location = useLocation()
 	const [showShadow, setShowShadow] = useState(window.scrollY > 0)
+
+	const htmlElRef = useRef(null)
+  const setFocus = () => {htmlElRef.current &&  htmlElRef.current.focus()}
 
 	const onScroll = () => {
 		if (window.scrollY > 0) {
@@ -63,6 +66,12 @@ export default function Header() {
 		dispatch(logout())
 	}
 
+	useEffect(() => {
+		if (showAccountDetail) {
+			setFocus()
+		}
+	}, [showAccountDetail])
+
 	return (
 		<header style={{boxShadow: showShadow ? '0px 1px 6px -1px grey' : null}}>
 			<div className="header-left">
@@ -96,13 +105,17 @@ export default function Header() {
 				<BiRefresh />
 			</button>
 			<button
-				onBlur={() => setShowAccountDetail(prev => !prev)}
 				onClick={() => setShowAccountDetail(prev => !prev)}
 				className="icon-button">
 				<MdPerson />
 			</button>
 			{showAccountDetail && (
-				<div className="account-detail">
+				<div
+					className="account-detail"
+					onBlur={() => setShowAccountDetail(false)}
+					onMouseDown={e => e.preventDefault()}
+					ref={htmlElRef}
+					tabIndex="0">
 					<p>{loginState.info.username}</p>
 					<button
 					className="icon-button"

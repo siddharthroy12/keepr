@@ -24,3 +24,26 @@ code {
   --shadow: 0px 2px 10px -4px #8e8e8e;
   --black: #252525;
 }
+@media screen and (max-width: 800px) {
+  :root {
+    font-size: 0.8rem;
+  }
+}
+
+body {
+  min-width: 330px;
+}
+
+.body {
+  padding-left: 5rem;
+}
+
+.body-sidebar-expand {
+  padding-left: 20rem;
+}
+
+@media  screen and (max-width: 550px) {
+  .body-sidebar-expand {
+    padding-left: 5rem;
+  }
+}

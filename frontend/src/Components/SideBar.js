@@ -13,11 +13,11 @@ export default function SideBar() {
 	const location = useLocation()
 
 	return (
-		<aside className="side-bar" style={{ width: sideBarState.expand ? '20rem' : '5rem' }}>
+		<aside className={sideBarState.expand ? 'side-bar side-bar-expand' : 'side-bar'}>
 			<nav>
 				<ul>
 					<li className={location.pathname === '/' ? "nav-item nav-item-active" : "nav-item"}>
-						<Link to='/'>
+						<Link to='/' >
 							<div className="nav-item-icon">
 								<MdInsertDriveFile />
 							</div>

@@ -36,11 +36,11 @@ export default function NoteEditor({ note: prevNote, onSave }) {
 				
 			</div>
 			<ContentEditable
-					className="note-editor-body"
-					html={note.body}
-					placeholder="Note"
-					onChange={(e) => setNote({...note, body: e.target.value})}
-				/>
+				className="note-editor-body"
+				html={note.body}
+				placeholder="Note"
+				onChange={(e) => setNote({...note, body: e.target.value})}
+			/>
 			<div className="note-editor-bottom">
 				<div className="note-editor-options">
 				{Object.keys(COLORS).map(Color => (
