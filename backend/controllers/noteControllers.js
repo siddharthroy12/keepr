@@ -67,7 +67,7 @@ const getTrashedNotes = asyncHandler(async (req, res) => {
 // @route POST /api/notes
 // @access Private
 const createNote = asyncHandler(async (req, res) => {
-	let { title, body, image, labels, color } = req.body
+	let { title, body, image, labels, color, pinned } = req.body
 
 	if (title.trim() === '' && body.trim() === '') {
 		res.status(400)
@@ -91,9 +91,9 @@ const createNote = asyncHandler(async (req, res) => {
 			body: body || '',
 			labels: labels || [],
 			color: color || '',
-			image: image || ''
+			image: image || '',
+			pinned: pinned === undefined ? false : true
 		})
-		console.log(1)
 
 		const user = await User.findById(req.user._id)
     user.notes.push(newNote._id)

@@ -23,14 +23,14 @@ export const fetchNotes = () => async (dispatch) => {
 	}
 }
 
-export const createNote = (title, body, color) => async (dispatch) => {
+export const createNote = (title, body, color, pinned) => async (dispatch) => {
 	try {
 		dispatch({
 			type: $.CREATE_NOTE_REQUEST,
-			payload: { title, body, color }
+			payload: { title, body, color, pinned }
 		})
 
-		const { data } = await axios.post('/api/notes', { title, body, color }, genConfig())
+		const { data } = await axios.post('/api/notes', { title, body, color, pinned }, genConfig())
 
 		dispatch({
       type: $.CREATE_NOTE_SUCCESS,

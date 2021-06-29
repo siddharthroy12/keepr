@@ -96,6 +96,7 @@ export default function Header() {
 				<BiRefresh />
 			</button>
 			<button
+				onBlur={() => setShowAccountDetail(prev => !prev)}
 				onClick={() => setShowAccountDetail(prev => !prev)}
 				className="icon-button">
 				<MdPerson />

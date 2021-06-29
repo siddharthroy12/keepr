@@ -19,7 +19,7 @@ export const notesReducer = (state = {}, action) => {
 				color: action.payload.color,
 				title: action.payload.title,
 				body: action.payload.body,
-				pinned: false,
+				pinned: action.payload.pinned,
 				trashed: false,
 				pending: true
 			}]}
