@@ -7,7 +7,8 @@
     "server": "nodemon backend/server",
     "client": "yarn --cwd frontend start",
     "dev": "concurrently \"yarn run server\" \"yarn run client\"",
-    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false yarn --cwd frontend install && yarn --cwd frontend build"
+    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false yarn --cwd frontend install && yarn --cwd frontend build",
+    "install-all": "yarn install && yarn --cwd frontend install"
   },
   "license": "MIT",
   "dependencies": {
