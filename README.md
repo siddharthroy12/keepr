@@ -81,15 +81,14 @@ Make sure you have these install on your system
 
 ### Running
 	```sh
-		npm dev
+	npm dev
 	```
 
 
 <!-- LICENSE -->
 ## License
 
-Distributed under the MIT License. See `LICENSE` for more information.
-
+Distributed under the MIT License.
 
 
 <!-- CONTACT -->
