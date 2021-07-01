@@ -80,9 +80,9 @@ Make sure you have these install on your system
    ```
 
 ### Running
-	```sh
-	npm dev
-	```
+```
+npm dev
+```
 
 
 <!-- LICENSE -->
